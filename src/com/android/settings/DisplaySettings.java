@@ -48,11 +48,13 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
     private static final String KEY_SCREEN_TIMEOUT = "screen_timeout";
     private static final String KEY_ACCELEROMETER = "accelerometer";
+    private static final String KEY_BATTERY_PERCENTAGE = "battery_percentage";
     private static final String KEY_FONT_SIZE = "font_size";
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_SCREEN_SAVER = "screensaver";
 
     private CheckBoxPreference mAccelerometer;
+    private CheckBoxPreference mBatteryPercentage;
     private ListPreference mFontSizePref;
     private CheckBoxPreference mNotificationPulse;
 
@@ -84,6 +86,10 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             getPreferenceScreen().removePreference(mAccelerometer);
         }
 
+        mBatteryPercentage = (CheckBoxPreference) findPreference(KEY_BATTERY_PERCENTAGE);
+        mBatteryPercentage.setChecked((Settings.System.getInt(getContentResolver(),
+            Settings.System.STATUS_BAR_BATTERY, 0) == 1));
+             
         mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
         if (mScreenSaverPreference != null
                 && getResources().getBoolean(
@@ -258,7 +264,11 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         if (preference == mAccelerometer) {
             RotationPolicy.setRotationLockForAccessibility(
                     getActivity(), !mAccelerometer.isChecked());
-        } else if (preference == mNotificationPulse) {
+        } else if (preference == mBatteryPercentage) {
+            boolean value = mBatteryPercentage.isChecked();
+            Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_BATTERY,
+                    value ? 1 : 0);
+            } else if (preference == mNotificationPulse) {
             boolean value = mNotificationPulse.isChecked();
             Settings.System.putInt(getContentResolver(), Settings.System.NOTIFICATION_LIGHT_PULSE,
                     value ? 1 : 0);
