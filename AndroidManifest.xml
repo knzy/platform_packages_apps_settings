@@ -1478,5 +1478,8 @@
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/appwidget_info" />
         </receiver>
 
+        <activity android:name=".rascarlo.PowerWidget" />
+        <activity android:name=".rascarlo.TabletPowerWidget" />
+
     </application>
 </manifest>

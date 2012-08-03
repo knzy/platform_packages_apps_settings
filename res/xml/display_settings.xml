@@ -58,19 +58,22 @@
             android:title="@string/notification_pulse_title"
             android:persistent="false" />
 
+        <PreferenceScreen
+          android:key="notification_drawer"
+          android:fragment="com.android.settings.rascarlo.PowerWidget"
+          android:title="@string/notification_drawer_title" />
+        
         <CheckBoxPreference
              android:key="battery_percentage"
              android:title="@string/title_battery_percentage"
              android:defaultValue="false" />
 
-        <!-- BUILD TWEAKS. Volume Rocker Wake -->
         <CheckBoxPreference
             android:key="pref_volume_wake"
             android:title="@string/pref_volume_wake_title"
             android:summary="@string/pref_volume_wake_summary"
             android:defaultValue="false" />
 
-        <!-- BUILD TWEAKS. Volume Rocker music control -->
         <CheckBoxPreference
             android:key="volbtn_music_controls"
             android:title="@string/volbtn_music_controls_title"

@@ -54,6 +54,11 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_FONT_SIZE = "font_size";
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_SCREEN_SAVER = "screensaver";
+    private static final String KEY_NOTIFICATION_DRAWER = "notification_drawer";
+    private static final String KEY_NOTIFICATION_DRAWER_TABLET = "notification_drawer_tablet";
+    
+    private PreferenceScreen mPhoneDrawer;
+    private PreferenceScreen mTabletDrawer;
 
     private CheckBoxPreference mAccelerometer;
     private CheckBoxPreference mBatteryPercentage;
@@ -81,6 +86,19 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         ContentResolver resolver = getActivity().getContentResolver();
 
         addPreferencesFromResource(R.xml.display_settings);
+
+        mPhoneDrawer = (PreferenceScreen) findPreference(KEY_NOTIFICATION_DRAWER);
+        mTabletDrawer = (PreferenceScreen) findPreference(KEY_NOTIFICATION_DRAWER_TABLET);
+
+        if (Utils.isTablet(getActivity())) {
+            if (mPhoneDrawer != null) {
+                getPreferenceScreen().removePreference(mPhoneDrawer);
+            }
+        } else {
+            if (mTabletDrawer != null) {
+                getPreferenceScreen().removePreference(mTabletDrawer);
+            }
+        }
 
         mAccelerometer = (CheckBoxPreference) findPreference(KEY_ACCELEROMETER);
         mAccelerometer.setPersistent(false);
